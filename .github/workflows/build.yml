@@ -8,6 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q uiutils-hontun.zip
+      - name: add orbit dependency
+        working-directory: uiutils-hontun
+        run: |
+          cat >> build.gradle.kts <<'EOT'
+          repositories { maven("https://maven.meteordev.org/releases") }
+          dependencies { compileOnly("meteordevelopment:orbit:0.2.4") }
+          EOT
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
